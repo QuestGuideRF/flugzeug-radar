@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="de">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Авиационный радар — ADS-B Live</title>
+
+  <link rel="stylesheet" href="/public/leaflet.css" crossorigin="" />
+  <script src="/public/leaflet.js" crossorigin=""></script>
+
+  <link rel="stylesheet" href="https://cesium.com/downloads/cesiumjs/releases/1.113/Build/Cesium/Widgets/widgets.css" />
+  <script src="https://cesium.com/downloads/cesiumjs/releases/1.113/Build/Cesium/Cesium.js"></script>
+
+  <link rel="stylesheet" href="/public/app.css" />
+</head>
+
+<body>
+  <div id="app-container">
+    <side-panel></side-panel>
+    <div id="cesiumContainer"></div>
+  </div>
+
+  <div id="coverage-popup">
+    <div class="coverage-popup-header">
+      <div class="coverage-popup-title">Радар покрытие</div>
+      <button class="coverage-popup-close" id="coverage-popup-close">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+    <div class="coverage-popup-body">
+
+      <div id="coverage-form">
+        <div class="coverage-form-group">
+          <label class="coverage-form-label" for="spot-name-input">Название точки</label>
+          <input
+            type="text"
+            id="spot-name-input"
+            class="coverage-form-input"
+            placeholder="Введите название точки..."
+          />
+        </div>
+        <button id="coverage-submit-btn" class="coverage-form-button">
+          Загрузить покрытие
+        </button>
+        <div id="coverage-loading" class="coverage-loading" style="display: none;">
+          Загрузка...
+        </div>
+      </div>
+
+      <div id="coverage-slider-container" class="coverage-slider-container">
+        <div class="coverage-spot-name" id="coverage-current-spot"></div>
+        <div class="coverage-slider-info">
+          <span class="coverage-slider-label">Максимальная высота</span>
+          <span class="coverage-slider-value" id="coverage-height-value">2000 м</span>
+        </div>
+        <input
+          type="range"
+          id="coverage-height-slider"
+          class="coverage-slider"
+          min="0"
+          max="5"
+          value="0"
+          step="1"
+        />
+      </div>
+    </div>
+  </div>
+
+  <script src="/public/app.js"></script>
+</body>
+
+</html>

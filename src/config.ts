@@ -1,0 +1,50 @@
+import 'dotenv/config';
+const getEnvVar = (name: string): string => {
+  const value = process.env[name];
+  if (typeof value === 'undefined') {
+    throw new Error(`Отсутствует необходимая переменная среды: ${name}.`);
+  }
+  return value;
+};
+const getEnvVarAsInt = (name: string): number => {
+  const value = getEnvVar(name);
+  const parsed = Number.parseInt(value, 10);
+  if (Number.isNaN(parsed)) {
+    throw new Error(`Переменная среды ${name} должна быть допустимым числом.`);
+  }
+  return parsed;
+};
+const getEnvVarAsFloat = (name: string): number => {
+  const value = getEnvVar(name);
+  const parsed = Number.parseFloat(value);
+  if (Number.isNaN(parsed)) {
+    throw new Error(`Переменная среды ${name} должна быть допустимым числом.`);
+  }
+  return parsed;
+};
+export const config = {
+  sbs: {
+    port: getEnvVarAsInt('SBS_PORT'),
+    host: getEnvVar('SBS_HOST'),
+  },
+  server: {
+    port: getEnvVarAsInt('APP_PORT'),
+    authPassword: process.env['APP_AUTH_PASSWORD'] || null,
+  },
+  state: {
+    maxAgeMs: getEnvVarAsInt('STATE_MAX_AGE_MS'),
+  },
+  database: {
+    url: getEnvVar('DATABASE_URL'),
+  },
+  statistics: {
+    mapPrecision: getEnvVarAsInt('STATISTICS_MAP_PRECISION'),
+    minDotsInCellAllowed: getEnvVarAsInt('STATISTICS_MIN_DOTS_IN_CELL_ALLOWED'),
+  },
+  spot: {
+    name: getEnvVar('SPOT_NAME'),
+    lat: getEnvVarAsFloat('SPOT_LAT'),
+    lon: getEnvVarAsFloat('SPOT_LON'),
+  },
+  aircraftDataSaveIntervalMs: getEnvVarAsInt('AIRCRAFT_DATA_SAVE_INTERVAL_MS'),
+} as const;
